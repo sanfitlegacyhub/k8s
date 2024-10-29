@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-dev
+#create name space 
+# to create kubectl apply -f ns.yaml
+#to get list $ kubectl get ns
+#by creating the namespace there wont be any issue with dealing on mutilple env pods .
+#to create : kubectl create ns dev 
+# kubectl apply deploy -f deolpoy.yaml -n dev 
+#kubectl apply deploy -f deolpoy.yaml -n QA
+#kubectl apply deploy -f deolpoy.yaml -n Prod
+#==================================================+++++++++++++++++++++++++++
+# PS C:\K8S\terraform\eks\eks-using-custom> cd ..
+# PS C:\K8S\terraform> cd .\yaml\
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\service.yaml
+# I0223 16:34:59.349006   41644 versioner.go:58] Get "https://12F1C45BDB06E7AD736141BCC18DBD91.gr7.us-east-1.eks.amazonaws.com/version?timeout=5s": dial tcp: lookup 12F1C45BDB06E7AD736141BCC18DBD91.gr7.us-east-1.eks.amazonaws.com: no such host
+# Unable to connect to the server: dial tcp: lookup 12F1C45BDB06E7AD736141BCC18DBD91.gr7.us-east-1.eks.amazonaws.com: no such host
+# PS C:\K8S\terraform\yaml> aws eks update-kubeconfig --name ed-eks-01 --region us-east-1
+# Updated context arn:aws:eks:us-east-1:015543860352:cluster/ed-eks-01 in C:\Users\sannr\.kube\config
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\service.yaml
+# PS C:\K8S\terraform\yaml> kubectl get ns
+# default           Active   14m
+# kube-node-lease   Active   14m
+# kube-system       Active   14m
+# PS C:\K8S\terraform\yaml> kubectl delete -f service.yaml
+# service "web-service" deleted
+# PS C:\K8S\terraform\yaml> kubrctl apply -f .\ns.yaml -n dev
+# kubrctl : The term 'kubrctl' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is         
+# correct and try again.
+# + kubrctl apply -f .\ns.yaml -n dev
+# + ~~~~~~~
+#     + FullyQualifiedErrorId : CommandNotFoundException
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\ns.yaml -n dev
+# namespace/ns-dev created
+# PS C:\K8S\terraform\yaml> kubectl get ns -dev
+# error: unknown shorthand flag: 'd' in -dev
+# See 'kubectl get --help' for usage.
+# PS C:\K8S\terraform\yaml> kubectl get ns -n dev
+# NAME              STATUS   AGE
+# kube-node-lease   Active   17m
+# kube-public       Active   17m
+# kube-system       Active   17m
+# ns-dev            Active   41s
+# PS C:\K8S\terraform\yaml> kubectl create ns -n QA
+# error: exactly one NAME is required, got 0
+# See 'kubectl create namespace -h' for help and examples
+# PS C:\K8S\terraform\yaml> kubectl create ns qa   
+# PS C:\K8S\terraform\yaml> kubectl get ns -n qa
+# NAME              STATUS   AGE
+# kube-node-lease   Active   19m
+# kube-system       Active   19m
+# ns-dev            Active   2m14s
+# PS C:\K8S\terraform\yaml> kubetctl apply -f .\deplyo.yaml -n dev
+# correct and try again.
+# At line:1 char:1
+# + ~~~~~~~~
+#     + FullyQualifiedErrorId : CommandNotFoundException
+ 
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\deplyo.yaml -n dev
+# Error from server (BadRequest): error when creating ".\\deplyo.yaml": Deployment in version "v1" cannot be handled as a Deployment: strict decoding error: unknown field "spec.template.spec.containers[0].livePS C:\K8S\terraform\yaml> kubectl apply -f .\deplyo.yaml -n dev
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\deplyo.yaml -n  ns-dex
+# PS C:\K8S\terraform\yaml> ^C
+# PS C:\K8S\terraform\yaml> ^C
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\deplyo.yaml -n  ns-dev
+# deployment.apps/web created
+# PS C:\K8S\terraform\yaml> kubectl get deploy -n ns-dev
+# NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+# PS C:\K8S\terraform\yaml> kubectl get service -n ns-dev
+# PS C:\K8S\terraform\yaml> kubectl get pods -n ns-dev   
+# web-6b6fbd465f-86kmr   1/1     Running   0          99s
+# web-6b6fbd465f-lp2n2   1/1     Running   0          99s
+# PS C:\K8S\terraform\yaml> kubectl get pods -n qa
+# No resources found in qa namespace.
+# PS C:\K8S\terraform\yaml> kubectl get ns
+# NAME              STATUS   AGE
+# kube-node-lease   Active   25m
+# kube-public       Active   25m
+# kube-system       Active   25m
+# ns-dev            Active   8m13s
+# qa                Active   6m17s
+# PS C:\K8S\terraform\yaml> kubectl get deploy -n qa     
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\deplyo.yaml -n  qa    
+# deployment.apps/web created
+# NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+# web    0/3     3            0           13s
+# PS C:\K8S\terraform\yaml> kubectl get pods -n qa
+# NAME                   READY   STATUS    RESTARTS   AGE
+# web-6b6fbd465f-plzl4   1/1     Running   0          32s
+# web-6b6fbd465f-tqld4   1/1     Running   0          32s
+# PS C:\K8S\terraform\yaml> kubectl gt rs -n qa
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\service.yaml
+# service/web-service created
+# PS C:\K8S\terraform\yaml> kubectl delete -f .\service.yaml
+# service "web-service" deleted
+# PS C:\K8S\terraform\yaml> kubectl get service             
+# NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+# kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   29m
+# PS C:\K8S\terraform\yaml> kubectl delete -f .\service.yaml -n dev
+# PS C:\K8S\terraform\yaml> ^C
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\service.yaml -n dev
+# Error from server (NotFound): error when creating ".\\service.yaml": namespaces "dev" not found
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\service.yaml -n ns-dev
+# service/web-service created
+# PS C:\K8S\terraform\yaml> kubectl get service -n ns-dev
+# NAME          TYPE           CLUSTER-IP      EXTERNAL-IP                                                               PORT(S)        AGE
+# web-service   LoadBalancer   10.100.207.92   a3e29be0371724008a7948bda4a58e3d-1506118484.us-east-1.elb.amazonaws.com   80:31000/TCP   23s
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\service.yaml -n qa    
+# The Service "web-service" is invalid: spec.ports[0].nodePort: Invalid value: 31000: provided port is already allocated

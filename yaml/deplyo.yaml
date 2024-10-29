@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web-server
+        image: httpd:latest
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        # livenessProbe:
+        #   tcpSocket:
+        #     port: 80
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 5
+        #   resources:
+        #   requests:
+        #     cpu: "100m"
+        #     memory: "128Mi"
+        #   limits:
+        #     cpu: "500m"
+        #     memory: "256Mi"
+
+
+        # - containerPort: 80
+
+  #below flow :
+# PS C:\K8S\terraform\yaml> kubectl apply -f .\deplyo.yaml
+# deployment.apps/web-replicaset created
+# PS C:\K8S\terraform\yaml> kubectl get deploy
+# NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+# web-replicaset   3/3     3            3           40s
+# PS C:\K8S\terraform\yaml> kubectl get deply -o wide
+# error: the server doesn't have a resource type "deply"
+# PS C:\K8S\terraform\yaml> kubectl get deploy -o wide
+# NAME             READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES   SELECTOR
+# web-replicaset   3/3     3            3           81s   web-server   httpd    app=web
+# PS C:\K8S\terraform\yaml> kubectl get rs
+# NAME                        DESIRED   CURRENT   READY   AGE
+# web-replicaset-766ddc9c87   3         3         3       96s
+# PS C:\K8S\terraform\yaml> kubectl get pods -o wide
+# NAME                              READY   STATUS    RESTARTS   AGE    IP              NODE                            NOMINATED NODE   READINESS GATES
+# httpdpod                          1/1     Running   0          107m   192.168.2.75    ip-192-168-2-194.ec2.internal   <none>           <none>
+# web-replicaset-766ddc9c87-j8f56   1/1     Running   0          115s   192.168.1.224   ip-192-168-1-151.ec2.internal   <none>           <none>
+# web-replicaset-766ddc9c87-krj6w   1/1     Running   0          115s   192.168.2.198   ip-192-168-2-194.ec2.internal   <none>           <none>
+# web-replicaset-766ddc9c87-wftlc   1/1     Running   0          115s   192.168.2.27    ip-192-168-2-194.ec2.internal   <none>           <none>
+# PS C:\K8S\terraform\yaml> 

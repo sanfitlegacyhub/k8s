@@ -1,0 +1,32 @@
+DELETE CLUSTER :
+COMMAND : eks delete-cluster
+PARAMETER : cluster name
+
+$ aws eks delete-cluster --name ed-eks-01
+
+DELETE NODEGROUP:
+COMMAND: delete-nodegroup
+PARAMETER: region, cluster name, nodegroup name
+
+$ aws eks --region us-east-1 delete-nodegroup --cluster-name ed-eks-01 --nodegroup-name w1
+more nodegroup deletion -aws eks --region us-west-2 delete-nodegroup --cluster-name my-cluster --nodegroup-name ng1 ng2 ng3
+
+
+LIST NODEGROUP:
+COMMAND: list-nodegroups
+PARAMETER: region , cluster name
+
+$ aws eks --region us-east-1  list-nodegroups --cluster-name ed-eks-01 
+
+GET THE USE CREDS :
+$ aws sts-get-caller-identity
+
+TO CONNECT k8s:
+une need the k8s certificate 
+$ aws eks update-kubeconfig --name cluster name --region region name
+ 
+
+
+ ingresscontroller :
+
+ 

@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-web
+  namespace: dev #which looks for this namespace 
+spec:
+  rules:
+  - host: www.wmio.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-service #service name will get hi 
+            port: 
+              number: 80 #service port  port 
+  ingressClassName: nginx # who is using 
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass #this will say the ingress resource above should be used by this calss 
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx  #which will tken by ingress deplyement 
+
+
+
+  #this rule is used by ingresscontroller 
+
+  #deploye the ingress controlle 
+  #ingress class 
+  #ingress resouce 

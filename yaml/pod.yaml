@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpdpod
+  labels:
+    app: httpd
+    createdby: sannr
+    env: dev
+spec:
+  containers:
+  - name: web
+    image: httpd
+    

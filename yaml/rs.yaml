@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: web-replicaset
+spec:
+  replicas: 3 #it will hadled by hpa
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web-server
+        image: httpd
+        # ports:
+        # - containerPort: 80
